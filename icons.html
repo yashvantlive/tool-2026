@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icons Generator | 2026 Tool Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+
+<body>
+    <div class="glass-bg"></div>
+
+    <nav class="breadcrumb">
+        <a href="index.html">← Back to Portal</a>
+    </nav>
+
+    <main class="app-container">
+        <header class="hero">
+            <h1 class="glitch-text">Icons Generator</h1>
+            <p class="subtitle">One Image. All Platform Icons. Instant & Secure.</p>
+        </header>
+
+        <section class="converter-box" id="drop-zone">
+            <div class="upload-area">
+                <div class="icon-pulse">
+                    <svg viewBox="0 0 24 24" width="60" height="60" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                </div>
+                <h3>Drop High-Res Logo</h3>
+                <p>PNG or JPG (Square recommended)</p>
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <button class="btn-primary" onclick="document.getElementById('file-input').click()">Select Logo</button>
+            </div>
+        </section>
+
+        <section class="processing-view hidden" id="processing-view">
+            <div class="icon-options">
+                <div class="option-card active" data-platform="all">
+                    <h4>All Platforms</h4>
+                    <span>Web, iOS, Android</span>
+                </div>
+                <div class="option-card" data-platform="web">
+                    <h4>Web Only</h4>
+                    <span>Favicons (ICO, PNG)</span>
+                </div>
+                <div class="option-card" data-platform="mobile">
+                    <h4>Mobile Only</h4>
+                    <span>App Icons</span>
+                </div>
+            </div>
+
+            <div class="preview-grid" id="icons-preview-grid">
+                <!-- Generated Icon Previews -->
+            </div>
+
+            <div class="global-controls">
+                <div class="control-group">
+                    <p id="status-text">Ready to generate bundle...</p>
+                </div>
+                <button class="btn-download-all" id="download-zip">Generate & Download ZIP</button>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>Built with Browser-Native Processing &copy; 2026</p>
+        </footer>
+    </main>
+
+    <script src="icons_app.js"></script>
+</body>
+
+</html>
