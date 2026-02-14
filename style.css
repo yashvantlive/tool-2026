@@ -599,3 +599,71 @@ body {
         align-items: center;
     }
 }
+/* Footer Styles */
+.footer {
+    margin-top: 4rem;
+    padding: 2rem 1rem;
+    border-top: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+
+.footer-logo {
+    font-size: 1.2rem;
+}
+
+.footer-brand a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.footer-brand a:hover {
+    opacity: 0.8;
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.85rem;
+}
+
+.footer-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+.footer-links .separator {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 600px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+}
