@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exact KB Converter | Smart Image Size Compressor</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Exact KB Image Converter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is a target-driven image compressor that compresses and pads images (JPG, PNG, WEBP) to match an exact file size in kilobytes (such as 15KB, 20KB, 50KB) specified by the user."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the exact sizing work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If the image is larger than the target, the tool adjusts resolution and quality. If it is smaller, it appends safe, non-destructive metadata comments (COM markers for JPG, private chunks for PNG, and PAD chunks for WEBP) to make the file size match the target exactly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which formats are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tool supports JPG, PNG, and WEBP. You can upload any standard image and convert it directly into your chosen output format."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do government and exam portals require exact KB sizes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Online application forms (like UPSC, SSC, banking, passport, and university admissions) have strict automated validators that reject files that are too large or too small. This tool helps you match those exact limits perfectly."
+          }
+        }
+      ]
+    }
+    </script>
+    <style>
+        /* Tool-specific extra styling */
+        .controls-container {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .number-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .number-input-wrapper input[type="number"] {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            width: 120px;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .number-input-wrapper input[type="number"]:focus {
+            border-color: var(--primary);
+        }
+
+        .kb-unit {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .status-message {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            min-height: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-message.success {
+            color: var(--accent-green);
+        }
+
+        .status-message.error {
+            color: var(--accent-red);
+        }
+
+        .gauge-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .gauge-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gauge-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent-green));
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .gauge-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .side-by-side {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .preview-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .preview-card h4 {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .preview-wrapper {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            background: #050508;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .preview-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .preview-wrapper.checkerboard::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(45deg, #111 25%, transparent 25%),
+                              linear-gradient(-45deg, #111 25%, transparent 25%),
+                              linear-gradient(45deg, transparent 75%, #111 75%),
+                              linear-gradient(-45deg, transparent 75%, #111 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .preview-wrapper img {
+            z-index: 1;
+        }
+
+        .size-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .preview-card.converted .size-badge {
+            color: var(--accent-green);
+            border-color: rgba(0, 255, 136, 0.2);
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .info-note {
+            background: rgba(255, 242, 0, 0.02);
+            border: 1px dashed rgba(255, 242, 0, 0.15);
+            border-radius: 12px;
+            padding: 1.2rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .info-note strong {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .side-by-side {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass-bg"></div>
+
+    <nav class="breadcrumb">
+        <a href="index.html">← Back to Portal</a>
+    </nav>
+
+    <main class="app-container">
+        <header class="hero">
+            <h1 class="glitch-text">Exact KB Converter</h1>
+            <p class="subtitle">🎯 Perfect image size for online forms, exams, and portals. No quality loss.</p>
+        </header>
+
+        <!-- UPLOAD SECTION -->
+        <section class="converter-box" id="drop-zone">
+            <div class="upload-area">
+                <div class="icon-pulse">
+                    <svg viewBox="0 0 24 24" width="60" height="60" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                    </svg>
+                </div>
+                <h3>Drag & Drop Image Here</h3>
+                <p>Support for JPG, PNG, WEBP, and more</p>
+                <input type="file" id="file-input" accept="image/*" hidden>
+                <button class="btn-primary" onclick="document.getElementById('file-input').click()">Browse Files</button>
+            </div>
+        </section>
+
+        <!-- PROCESSING & CONTROL VIEW -->
+        <section class="processing-view hidden" id="processing-view">
+            
+            <!-- Side-by-Side Comparison -->
+            <div class="side-by-side">
+                <!-- Original Image -->
+                <div class="preview-card">
+                    <h4>Original Image</h4>
+                    <div class="preview-wrapper checkerboard">
+                        <img id="orig-img" alt="Original preview">
+                    </div>
+                    <div class="size-badge" id="orig-size">—</div>
+                </div>
+
+                <!-- Converted Image -->
+                <div class="preview-card converted">
+                    <h4>Converted Image</h4>
+                    <div class="preview-wrapper checkerboard">
+                        <img id="new-img" alt="Converted preview">
+                    </div>
+                    <div class="size-badge" id="new-size">—</div>
+                </div>
+            </div>
+
+            <!-- Controls and Settings -->
+            <div class="controls-container" style="margin-top: 2rem; margin-bottom: 2rem;">
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="target-kb">Target File Size</label>
+                        <div class="number-input-wrapper">
+                            <input type="number" id="target-kb" value="15" min="1" max="5000">
+                            <span class="kb-unit">KB</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Output Format</label>
+                        <div class="preset-group" id="format-presets">
+                            <button class="btn-preset active" data-format="jpg">JPG</button>
+                            <button class="btn-preset" data-format="png">PNG</button>
+                            <button class="btn-preset" data-format="webp">WEBP</button>
+                        </div>
+                    </div>
+
+                    <div class="input-group" style="flex: 1; min-width: 180px;">
+                        <label>Common Presets</label>
+                        <div class="preset-group">
+                            <button class="btn-preset active" data-v="15">15 KB</button>
+                            <button class="btn-preset" data-v="20">20 KB</button>
+                            <button class="btn-preset" data-v="50">50 KB</button>
+                            <button class="btn-preset" data-v="100">100 KB</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gauge / Match Accuracy Indicator -->
+                <div class="gauge-container">
+                    <div class="gauge-bar">
+                        <div class="gauge-fill" id="gauge-fill"></div>
+                    </div>
+                    <div class="gauge-meta">
+                        <span>0 KB</span>
+                        <span id="gauge-target-label">Target: 15 KB</span>
+                    </div>
+                </div>
+
+                <!-- Status Messages -->
+                <div class="status-message" id="status-message">
+                    <span>⚡ Ready to convert. Choose your target size, format and click Convert.</span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="global-controls" style="position: static; padding: 1.2rem 2rem; margin-top: 0.5rem; background: rgba(0, 0, 0, 0.2);">
+                    <div class="target-indicator" id="target-format-indicator">
+                        <span class="pulse-dot"></span>
+                        Output: Exact Size JPG
+                    </div>
+                    <div class="download-actions">
+                        <button class="btn-download-all" id="convert-btn">Convert to Exact KB</button>
+                        <button class="btn-download-zip" id="download-btn" style="background: rgba(0, 255, 136, 0.15); border-color: rgba(0, 255, 136, 0.3); color: var(--accent-green);" disabled>Download JPG</button>
+                        <button class="btn-danger" id="reset-btn">Clear</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explanatory Note -->
+            <div class="info-note">
+                <strong>💡 How it works:</strong> If the original image is larger than the target, we scale and adjust the JPEG quality intelligently to bring it close. If it is smaller (or once we get it close), we append safe, standard JPEG metadata comments (COM markers) to match the <strong>exact byte size</strong> without altering the visual quality of your photo. Output is always downloaded as a highly compatible <code>.jpg</code> format.
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <details class="faq-item">
+                <summary>What is the Exact KB Image Converter?</summary>
+                <div class="faq-content">
+                    <p>It is a target-driven image compressor that compresses and pads images (JPG, PNG, WEBP) to match an exact file size in kilobytes (such as 15KB, 20KB, 50KB) specified by the user.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>How does the exact sizing work?</summary>
+                <div class="faq-content">
+                    <p>If the image is larger than the target, the tool adjusts resolution and quality. If it is smaller, it appends safe, non-destructive metadata comments (COM markers for JPG, private chunks for PNG, and PAD chunks for WEBP) to make the file size match the target exactly. The visual quality remains unchanged.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Which formats are supported?</summary>
+                <div class="faq-content">
+                    <p>The tool fully supports <strong>JPG</strong>, <strong>PNG</strong>, and <strong>WEBP</strong> formats. You can upload any standard image format and output it in the exact file format and size you select.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Why do government and exam portals require exact KB sizes?</summary>
+                <div class="faq-content">
+                    <p>Online application forms (such as UPSC, SSC, banking, passport, and university admissions) use automated validators to manage server storage and standardise uploads. These validators automatically reject images that do not meet strict range requirements. This tool guarantees you match those limits perfectly on the first try.</p>
+                </div>
+            </details>
+        </section>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="footer-logo">⚡</span>
+                    <span>Part of <a href="https://youlearn.community" target="_blank"
+                            rel="noopener">YouLearn.community</a></span>
+                </div>
+                <div class="footer-links">
+                    <a href="guide.html">Guide</a>
+                    <span class="separator">•</span>
+                    <a href="privacy.html">Privacy</a>
+                    <span class="separator">•</span>
+                    <a href="terms.html">Terms</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script src="js/exact-kb-app.js"></script>
+</body>
+
+</html>

@@ -5,12 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Developer Account Converter | Google Play Console Optimizer</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Developer Account Converter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is a professional optimizer designed specifically for Google Play Console developer accounts. It converts and resizes images to meet the exact dimensions and file size limits of the Developer Header (4096×2304) and Developer Icon (512×512)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the exact requirements for Google Play Developer Headers and Icons?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Developer Header must be exactly 4096×2304 px, and the Developer Icon must be exactly 512×512 px. Both must be JPG or 24-bit PNG (without transparency/alpha channel) and must not exceed 1 MB in size."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does this tool force JPG format?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Google Play Console requires headers and developer icons to have no transparency (24-bit). Forcing JPG format automatically removes alpha channels (transparency) by rendering them over a clean solid white background, preventing console rejection errors."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I crop my image to fit the 16:9 ratio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, the built-in crop editor has preset aspects like 16:9 (Header) and 1:1 (Icon) to help you perfectly crop and center your branding before conversion."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -70,7 +110,7 @@
                     <div class="control-group">
                         <label>Output Format:</label>
                         <div class="format-group">
-                            <button class="btn-preset active" data-format="jpeg">JPEG (Compressed)</button>
+                            <button class="btn-preset active" data-format="jpg">JPG (Compressed)</button>
                             <button class="btn-preset" data-format="png">PNG (Lossless)</button>
                         </div>
                     </div>
@@ -132,6 +172,39 @@
                     </div>
                 </div>
             </section>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <details class="faq-item">
+                <summary>What is the Developer Account Converter?</summary>
+                <div class="faq-content">
+                    <p>It is a professional optimizer designed specifically for Google Play Console developer accounts. It converts and resizes images to meet the exact dimensions and file size limits of the Developer Header (4096×2304) and Developer Icon (512×512).</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>What are the exact requirements for Google Play Developer Headers and Icons?</summary>
+                <div class="faq-content">
+                    <p>The Developer Header must be exactly <strong>4096×2304 px</strong>, and the Developer Icon must be exactly <strong>512×512 px</strong>. Both must be JPG or 24-bit PNG (without transparency or alpha channels) and must not exceed the <strong>1 MB</strong> file size limit.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Why does this tool force JPG format?</summary>
+                <div class="faq-content">
+                    <p>Google Play Console requires headers and developer icons to have no transparency (24-bit). Forcing JPG format automatically removes alpha channels (transparency) by rendering them over a clean solid white background, preventing console upload rejection errors.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Can I crop my image to fit the 16:9 ratio?</summary>
+                <div class="faq-content">
+                    <p>Yes, the built-in crop editor has preset aspects like 16:9 (Header) and 1:1 (Icon) to help you perfectly crop and center your branding before conversion.</p>
+                </div>
+            </details>
         </section>
 
         <footer class="footer">
@@ -249,7 +322,7 @@
         }
     </style>
 
-    <script src="profile-app.js"></script>
+    <script src="js/profile-app.js"></script>
 </body>
 
 </html>

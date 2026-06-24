@@ -5,12 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Icons Generator | 2026 Tool Portal</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the Icons Generator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is a browser-native icon generator that takes a single high-resolution square logo and generates a package containing all required favicons and app icons for iOS, Android, and Web browsers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What sizes does the generator produce?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tool generates web sizes (16x16, 32x32, 48x48, 192x192, 512x512, and 16x16 ICO), iOS sizes (up to 180x180), and Android launcher sizes (up to 192x192)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What formats are generated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It generates PNG files for icons, an ICO file for the main browser favicon, and bundles everything into a convenient ZIP archive."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the Icons Generator store my images?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, the generator works 100% on your device. The images are processed in memory using the HTML5 Canvas API and are never uploaded to any server."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -69,6 +109,45 @@
             </div>
         </section>
 
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="faq-title">Frequently Asked Questions</h2>
+            
+            <details class="faq-item">
+                <summary>What is the Icons Generator?</summary>
+                <div class="faq-content">
+                    <p>It is a browser-native icon generator that takes a single high-resolution square logo and generates a package containing all required favicons and app icons for iOS, Android, and Web browsers.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>What sizes does the generator produce?</summary>
+                <div class="faq-content">
+                    <p>The tool generates:
+                        <ul>
+                            <li><strong>Web Favicons</strong>: 16×16, 32×32, 48×48, 192×192, 512×512, and a multi-resolution `.ico` file.</li>
+                            <li><strong>iOS App Icons</strong>: 120×120, 152×152, 167×167, 180×180.</li>
+                            <li><strong>Android App Icons</strong>: 48×48, 72×72, 96×96, 144×144, 192×192.</li>
+                        </ul>
+                    </p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>What formats are generated?</summary>
+                <div class="faq-content">
+                    <p>It outputs highly optimized PNG files for maximum device compatibility, a classic multi-size `.ico` favicon, and compiles the entire bundle into a single <strong>ZIP archive</strong> for easy download.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Does the Icons Generator store my images?</summary>
+                <div class="faq-content">
+                    <p>No. The generator operates entirely client-side. The image is processed in your browser's active memory using HTML5 Canvas and is never transmitted over the internet or saved on any server.</p>
+                </div>
+            </details>
+        </section>
+
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-brand">
@@ -87,7 +166,7 @@
         </footer>
     </main>
 
-    <script src="icons_app.js"></script>
+    <script src="js/icons_app.js"></script>
 </body>
 
 </html>

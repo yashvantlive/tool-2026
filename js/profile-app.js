@@ -47,7 +47,7 @@ const HEADER_WIDTH = 4096;
 const HEADER_HEIGHT = 2304;
 const MAX_FILE_SIZE = 1024 * 1024; // 1 MB
 let headerFile = null;
-let headerFormat = 'jpeg';
+let headerFormat = 'jpg';
 
 // Tab format selector for header
 document.getElementById('header-tab').querySelectorAll('.format-group .btn-preset').forEach(btn => {
@@ -200,7 +200,7 @@ const iconResetBtn = document.getElementById('reset-icon');
 
 const ICON_SIZE = 512;
 let iconFile = null;
-let iconFormat = 'jpeg'; // Always JPEG for Google Play
+let iconFormat = 'jpg'; // Always JPG for Google Play
 
 iconQualitySlider.addEventListener('input', (e) => {
     iconQualityVal.textContent = e.target.value;
@@ -304,7 +304,7 @@ iconDownloadBtn.addEventListener('click', async () => {
         const quality = parseInt(iconQualitySlider.value);
         
         // For Google Play Console: Force JPEG (removes any transparency/alpha)
-        const useFormat = 'jpeg'; // Always JPEG for Google Play 24-bit requirement
+        const useFormat = 'jpg'; // Always JPG for Google Play 24-bit requirement
         const blob = await convertImageToSize(iconFile, ICON_SIZE, ICON_SIZE, quality, useFormat);
         
         const fileName = `${iconFile.name.split('.')[0]}_icon.jpg`;
